@@ -38,7 +38,7 @@ app:
     api-key: ${GEMINI_API_KEY:}
     model: ${GEMINI_MODEL:gemini-3.5-flash-lite}
     base-url: ${GEMINI_BASE_URL:https://generativelanguage.googleapis.com}
-    timeout-ms: ${GEMINI_TIMEOUT_MS:15000}
+    timeout-ms: ${GEMINI_TIMEOUT_MS:60000}
     fallback-enabled: ${GEMINI_FALLBACK_ENABLED:true}
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173}
