@@ -1,0 +1,17 @@
+2026-10-30 09:21:05.112 ERROR [payment-worker-3] org.hibernate.engine.jdbc.spi.SqlExceptionHelper : ERROR: deadlock detected
+  Detail: Process 14202 waits for ShareLock on transaction 89123; blocked by process 14209.
+  Process 14209 waits for ExclusiveLock on tuple (42, 18) of relation "inventory_items" of database 16390; blocked by process 14202.
+  Hint: See server log for query details.
+org.springframework.dao.CannotAcquireLockException: could not execute statement [ERROR: deadlock detected]
+    at org.hibernate.exception.internal.SQLStateConverter.convert(SQLStateConverter.java:115)
+    at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+    at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+    at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:200)
+    at com.example.inventory.service.StockService.reserveStock(StockService.java:88)
+    at com.example.inventory.listener.OrderEventListener.handleOrderCreated(OrderEventListener.java:34)
+Caused by: org.postgresql.util.PSQLException: ERROR: deadlock detected
+  Detail: Process 14202 waits for ShareLock on transaction 89123; blocked by process 14209.
+    at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2675)
+    at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2365)
+    at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:355)
+    at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:490)

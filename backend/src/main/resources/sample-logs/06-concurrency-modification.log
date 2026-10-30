@@ -1,0 +1,10 @@
+2026-10-30 11:55:40.312 ERROR [batch-processor-1] com.example.batch.UserSyncTask : Failed to complete batch synchronisation cycle
+java.util.ConcurrentModificationException: null
+    at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1096)
+    at java.base/java.util.ArrayList$Itr.next(ArrayList.java:1050)
+    at com.example.batch.UserSyncTask.broadcastStatusUpdate(UserSyncTask.java:134)
+    at com.example.batch.UserSyncTask.processUserList(UserSyncTask.java:82)
+    at com.example.batch.UserSyncTask.run(UserSyncTask.java:59)
+    at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+    at java.base/java.util.concurrent.FutureTask.runAndReset(FutureTask.java:358)
+    at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:305)

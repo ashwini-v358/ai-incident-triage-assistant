@@ -1,0 +1,15 @@
+2026-10-30 12:45:00.123 ERROR [http-nio-8080-exec-5] org.hibernate.engine.jdbc.spi.SqlExceptionHelper : ERROR: duplicate key value violates unique constraint "users_email_key"
+  Detail: Key (email)=(sarah.connor@example.com) already exists.
+org.springframework.dao.DataIntegrityViolationException: could not execute statement [ERROR: duplicate key value violates unique constraint "users_email_key"]
+    at org.hibernate.exception.internal.SQLStateConverter.convert(SQLStateConverter.java:118)
+    at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:42)
+    at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:109)
+    at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:200)
+    at com.example.user.service.UserService.registerNewUser(UserService.java:73)
+    at com.example.user.controller.UserController.register(UserController.java:38)
+Caused by: org.postgresql.util.PSQLException: ERROR: duplicate key value violates unique constraint "users_email_key"
+  Detail: Key (email)=(sarah.connor@example.com) already exists.
+    at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2675)
+    at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2365)
+    at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:355)
+    at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:490)

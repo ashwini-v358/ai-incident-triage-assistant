@@ -1,0 +1,8 @@
+2026-10-30 11:15:00.672 WARN [http-nio-8080-exec-2] com.example.security.JwtAuthenticationFilter : JWT token validation failed for request URI: /api/v1/customer/profile
+io.jsonwebtoken.ExpiredJwtException: JWT expired at 2026-10-30T10:15:00Z. Current time: 2026-10-30T11:15:00Z, a difference of 3600000 milliseconds. Allowed clock skew: 0 milliseconds.
+    at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:420)
+    at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:566)
+    at com.example.security.JwtTokenProvider.validateToken(JwtTokenProvider.java:65)
+    at com.example.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:45)
+    at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+    at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)

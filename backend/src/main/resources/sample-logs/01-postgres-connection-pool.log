@@ -1,0 +1,19 @@
+2026-10-30 08:14:22.451 ERROR [http-nio-8080-exec-14] com.zaxxer.hikari.pool.HikariPool : HikariPool-1 - Connection is not available, request timed out after 30005ms.
+org.springframework.dao.CannotAcquireLockException: Could not open JPA EntityManager for transaction; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection
+    at org.springframework.orm.jpa.JpaTransactionManager.doBegin(JpaTransactionManager.java:449)
+    at org.springframework.transaction.support.AbstractPlatformTransactionManager.getTransaction(AbstractPlatformTransactionManager.java:373)
+    at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:379)
+    at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+    at com.example.orderservice.service.OrderCheckoutService.processPayment(OrderCheckoutService.java:142)
+    at com.example.orderservice.controller.CheckoutController.checkout(CheckoutController.java:55)
+Caused by: org.postgresql.util.PSQLException: FATAL: remaining connection slots are reserved for non-replication superuser connections
+    at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:643)
+    at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:204)
+    at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:257)
+    at org.postgresql.Driver.makeConnection(Driver.java:528)
+    at org.postgresql.Driver.connect(Driver.java:310)
+    at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+    at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:364)
+    at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
+    at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
+    at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)

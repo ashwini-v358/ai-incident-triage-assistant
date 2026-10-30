@@ -1,0 +1,11 @@
+2026-10-30 10:02:18.892 FATAL [catalina-exec-44] org.apache.catalina.core.StandardWrapperValve : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Handler dispatch failed: java.lang.OutOfMemoryError: Java heap space] with root cause
+java.lang.OutOfMemoryError: Java heap space
+    at java.base/java.util.Arrays.copyOf(Arrays.java:3516)
+    at java.base/java.io.ByteArrayOutputStream.grow(ByteArrayOutputStream.java:120)
+    at java.base/java.io.ByteArrayOutputStream.ensureCapacity(ByteArrayOutputStream.java:95)
+    at java.base/java.io.ByteArrayOutputStream.write(ByteArrayOutputStream.java:156)
+    at com.example.analytics.service.ReportExporterService.generatePdfReport(ReportExporterService.java:215)
+    at com.example.analytics.controller.ReportController.export(ReportController.java:54)
+    at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+    at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+    at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)

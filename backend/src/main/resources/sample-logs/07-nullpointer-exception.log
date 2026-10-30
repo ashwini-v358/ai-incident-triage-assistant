@@ -1,0 +1,8 @@
+2026-10-30 12:10:11.901 ERROR [http-nio-8080-exec-19] com.example.order.controller.OrderController : Uncaught exception processing order submission
+java.lang.NullPointerException: Cannot invoke "com.example.order.model.Address.getPostalCode()" because "deliveryAddress" is null
+    at com.example.order.service.ShippingCalculatorService.calculateFee(ShippingCalculatorService.java:52)
+    at com.example.order.service.OrderServiceImpl.createOrder(OrderServiceImpl.java:94)
+    at com.example.order.controller.OrderController.submitOrder(OrderController.java:41)
+    at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+    at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+    at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)

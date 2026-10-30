@@ -1,0 +1,15 @@
+2026-10-30 10:45:33.204 ERROR [http-nio-8080-exec-8] com.example.payment.client.StripeGatewayClient : Remote call to payment gateway failed
+org.springframework.web.client.ResourceAccessException: I/O error on POST request for "https://api.stripe.com/v1/charges": Read timed out
+    at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:891)
+    at org.springframework.web.client.RestTemplate.execute(RestTemplate.java:790)
+    at org.springframework.web.client.RestTemplate.postForEntity(RestTemplate.java:515)
+    at com.example.payment.client.StripeGatewayClient.charge(StripeGatewayClient.java:78)
+    at com.example.payment.service.BillingService.processSubscription(BillingService.java:112)
+    at com.example.payment.controller.BillingController.subscribe(BillingController.java:49)
+Caused by: java.net.SocketTimeoutException: Read timed out
+    at java.base/sun.nio.ch.NioSocketImpl.timedRead(NioSocketImpl.java:278)
+    at java.base/sun.nio.ch.NioSocketImpl.implRead(NioSocketImpl.java:304)
+    at java.base/sun.nio.ch.NioSocketImpl.read(NioSocketImpl.java:346)
+    at java.base/sun.nio.ch.NioSocketImpl$1.read(NioSocketImpl.java:796)
+    at java.base/java.net.Socket$SocketInputStream.read(Socket.java:1099)
+    at java.base/sun.security.ssl.SSLSocketInputRecord.read(SSLSocketInputRecord.java:489)

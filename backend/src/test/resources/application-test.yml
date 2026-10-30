@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: incident-triage-backend-test
+
+  datasource:
+    url: jdbc:h2:mem:incident_test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+app:
+  gemini:
+    api-key: mock-test-key
+    model: gemini-3.5-flash-lite
+    base-url: https://generativelanguage.googleapis.com
+    timeout-ms: 2000
+    fallback-enabled: true
+  cors:
+    allowed-origins: "*"

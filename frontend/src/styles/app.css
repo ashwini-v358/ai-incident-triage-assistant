@@ -1,0 +1,197 @@
+:root {
+  --primary-glow: rgba(59, 130, 246, 0.25);
+  --danger-glow: rgba(239, 68, 68, 0.25);
+  --warning-glow: rgba(245, 158, 11, 0.25);
+  --success-glow: rgba(16, 185, 129, 0.25);
+}
+
+body {
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* Card Styling */
+.card {
+  background-color: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  border-color: #484f58;
+}
+
+.card-header {
+  background-color: #1c2129;
+  border-bottom: 1px solid #30363d;
+  font-weight: 600;
+}
+
+/* Metric Cards */
+.metric-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card .metric-icon {
+  position: absolute;
+  right: 1.25rem;
+  top: 1.25rem;
+  font-size: 2.2rem;
+  opacity: 0.2;
+}
+
+/* Severity Badges */
+.badge-critical {
+  background-color: #b91c1c !important;
+  color: #fff !important;
+  box-shadow: 0 0 10px var(--danger-glow);
+}
+
+.badge-high {
+  background-color: #c2410c !important;
+  color: #fff !important;
+  box-shadow: 0 0 10px var(--warning-glow);
+}
+
+.badge-medium {
+  background-color: #d97706 !important;
+  color: #000 !important;
+}
+
+.badge-low {
+  background-color: #15803d !important;
+  color: #fff !important;
+}
+
+/* Status Badges */
+.badge-open {
+  background-color: #dc2626 !important;
+  color: #fff !important;
+}
+
+.badge-investigating {
+  background-color: #2563eb !important;
+  color: #fff !important;
+}
+
+.badge-mitigated {
+  background-color: #eab308 !important;
+  color: #000 !important;
+}
+
+.badge-resolved {
+  background-color: #10b981 !important;
+  color: #fff !important;
+}
+
+/* Category Badges */
+.badge-database {
+  background-color: #4f46e5 !important;
+  color: #fff !important;
+}
+
+.badge-memory {
+  background-color: #9333ea !important;
+  color: #fff !important;
+}
+
+.badge-network {
+  background-color: #0284c7 !important;
+  color: #fff !important;
+}
+
+.badge-auth {
+  background-color: #be185d !important;
+  color: #fff !important;
+}
+
+.badge-concurrency {
+  background-color: #0d9488 !important;
+  color: #fff !important;
+}
+
+.badge-logic {
+  background-color: #4b5563 !important;
+  color: #fff !important;
+}
+
+/* Code and Stack Trace Viewer */
+.stack-trace-box {
+  background-color: #0a0d12;
+  border: 1px solid #30363d;
+  border-radius: 6px;
+  color: #f0f6fc;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  max-height: 350px;
+  overflow-y: auto;
+  white-space: pre;
+  padding: 1rem;
+}
+
+.code-inline {
+  background-color: rgba(110, 118, 129, 0.2);
+  color: #f0883e;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.88em;
+}
+
+/* Custom Table */
+.table-dark {
+  --bs-table-bg: #161b22;
+  --bs-table-border-color: #30363d;
+}
+
+.table-dark th {
+  color: #8b949e;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Nav tabs */
+.nav-tabs .nav-link {
+  color: #8b949e;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 0.75rem 1.25rem;
+  font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+  color: #58a6ff;
+  background-color: transparent;
+  border-bottom: 2px solid #58a6ff;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+  color: #c9d1d9;
+  border-bottom-color: #30363d;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #484f58;
+}
