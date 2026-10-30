@@ -59,3 +59,4 @@ export default function StatsCards({ stats }) {
     </div>
   );
 }
+

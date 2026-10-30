@@ -65,3 +65,4 @@ public class RuleClassificationResult {
         this.ruleRationale = ruleRationale;
     }
 }
+

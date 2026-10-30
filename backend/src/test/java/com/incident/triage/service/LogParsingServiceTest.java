@@ -77,3 +77,4 @@ class LogParsingServiceTest {
         assertEquals("Empty log provided", nullParsed.getMainErrorMessage());
     }
 }
+

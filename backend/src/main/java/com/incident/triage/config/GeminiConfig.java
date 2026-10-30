@@ -57,3 +57,4 @@ public class GeminiConfig {
         return apiKey != null && !apiKey.trim().isEmpty() && !apiKey.contains("your_gemini_api_key");
     }
 }
+

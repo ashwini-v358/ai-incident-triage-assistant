@@ -6,3 +6,4 @@ io.jsonwebtoken.ExpiredJwtException: JWT expired at 2026-10-30T10:15:00Z. Curren
     at com.example.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:45)
     at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
     at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186)
+

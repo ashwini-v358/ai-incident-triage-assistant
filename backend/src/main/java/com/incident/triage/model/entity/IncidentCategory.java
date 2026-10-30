@@ -26,3 +26,4 @@ public enum IncidentCategory {
         return description;
     }
 }
+

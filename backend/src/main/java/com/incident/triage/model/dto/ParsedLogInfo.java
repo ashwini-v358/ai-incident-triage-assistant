@@ -126,3 +126,4 @@ public class ParsedLogInfo {
         this.contextLines = contextLines;
     }
 }
+

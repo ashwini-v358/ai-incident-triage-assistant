@@ -72,3 +72,4 @@ public class BenchmarkSampleDto {
         this.rawLog = rawLog;
     }
 }
+

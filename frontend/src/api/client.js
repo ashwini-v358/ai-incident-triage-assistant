@@ -75,3 +75,4 @@ export const incidentApi = {
 };
 
 export default api;
+

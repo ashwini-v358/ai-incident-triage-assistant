@@ -47,3 +47,4 @@ export default function Navbar({ activeTab, setActiveTab, onOpenHealth, healthDa
     </nav>
   );
 }
+

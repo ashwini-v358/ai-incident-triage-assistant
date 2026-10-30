@@ -302,3 +302,4 @@ public class IncidentResponse {
         this.updatedAt = updatedAt;
     }
 }
+

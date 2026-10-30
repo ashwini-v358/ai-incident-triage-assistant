@@ -137,3 +137,4 @@ public class EvaluationMetricDto {
         this.recommendedFixes = recommendedFixes;
     }
 }
+

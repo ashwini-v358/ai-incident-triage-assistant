@@ -9,3 +9,4 @@ java.lang.OutOfMemoryError: Java heap space
     at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
     at java.base/java.lang.reflect.Method.invoke(Method.java:580)
     at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255)
+

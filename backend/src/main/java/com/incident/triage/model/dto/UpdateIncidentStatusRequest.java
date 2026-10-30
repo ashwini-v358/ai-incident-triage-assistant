@@ -34,3 +34,4 @@ public class UpdateIncidentStatusRequest {
         this.resolutionNotes = resolutionNotes;
     }
 }
+

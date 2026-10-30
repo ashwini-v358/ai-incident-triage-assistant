@@ -288,3 +288,4 @@ public class Incident {
         this.updatedAt = updatedAt;
     }
 }
+

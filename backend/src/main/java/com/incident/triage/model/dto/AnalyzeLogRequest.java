@@ -53,3 +53,4 @@ public class AnalyzeLogRequest {
         this.title = title;
     }
 }
+

@@ -72,3 +72,4 @@ public class AiAnalysisResult {
         this.provider = provider;
     }
 }
+

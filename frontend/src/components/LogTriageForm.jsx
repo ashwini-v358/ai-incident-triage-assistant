@@ -242,3 +242,4 @@ export default function LogTriageForm({ onIncidentAnalyzed, benchmarkSamples = [
     </div>
   );
 }
+

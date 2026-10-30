@@ -116,3 +116,4 @@ public class IncidentController {
         return ResponseEntity.ok(incidentTriageService.getStats());
     }
 }
+

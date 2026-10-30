@@ -125,3 +125,4 @@ public class IncidentStatsDto {
         this.providerDistribution = providerDistribution;
     }
 }
+

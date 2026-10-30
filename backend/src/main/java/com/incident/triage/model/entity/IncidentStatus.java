@@ -22,3 +22,4 @@ public enum IncidentStatus {
         return description;
     }
 }
+

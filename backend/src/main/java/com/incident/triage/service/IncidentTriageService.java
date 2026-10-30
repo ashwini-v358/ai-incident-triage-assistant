@@ -219,3 +219,4 @@ public class IncidentTriageService {
         return lastDot >= 0 ? fqcn.substring(lastDot + 1) : fqcn;
     }
 }
+

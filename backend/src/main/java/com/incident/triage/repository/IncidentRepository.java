@@ -32,3 +32,4 @@ public interface IncidentRepository extends JpaRepository<Incident, Long>, JpaSp
     @Query("SELECT AVG(i.confidenceScore) FROM Incident i WHERE i.confidenceScore IS NOT NULL")
     Double getAverageConfidenceScore();
 }
+

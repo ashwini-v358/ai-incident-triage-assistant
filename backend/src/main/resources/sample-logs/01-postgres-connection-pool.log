@@ -17,3 +17,4 @@ Caused by: org.postgresql.util.PSQLException: FATAL: remaining connection slots 
     at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:206)
     at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:476)
     at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+
