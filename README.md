@@ -374,71 +374,9 @@ TraceWise-AI/
 │   └── package.json
 │
 └── README.md
-```
-
-*The directory names above illustrate the logical organization of the application. Adjust them to match the actual package and folder names in your repository.*
-
 ---
 
-## 10. Running the Project Locally
-
-### Prerequisites
-
-- Java 21
-- Maven
-- Node.js and npm
-- PostgreSQL
-- Google Gemini API key
-
-### Backend Setup
-
-1. Navigate to the backend directory.
-
-```bash
-cd backend
-```
-
-2. Configure the PostgreSQL connection and Gemini API key using environment variables.
-
-```text
-GEMINI_API_KEY=your_gemini_api_key
-```
-
-Configure the database URL, username, and password according to your local PostgreSQL setup.
-
-3. Start the Spring Boot application.
-
-```bash
-mvn spring-boot:run
-```
-
-Backend URL: `http://localhost:8080`
-
-### Frontend Setup
-
-1. Open a separate terminal and navigate to the frontend directory.
-
-```bash
-cd frontend
-```
-
-2. Install dependencies.
-
-```bash
-npm install
-```
-
-3. Start the development server.
-
-```bash
-npm run dev
-```
-
-Frontend URL: `http://localhost:5173`
-
----
-
-## 11. Testing and Verification
+## 10. Testing and Verification
 
 The project includes backend unit tests using JUnit.
 
@@ -452,7 +390,7 @@ The application has also been verified through:
 
 ---
 
-## 12. Current Project Scope
+## 11. Current Project Scope
 
 TraceWise AI is designed as an **incident diagnosis and debugging recommendation platform**.
 
@@ -461,25 +399,3 @@ It analyzes submitted logs, identifies potential causes, and provides recommenda
 The current implementation does not automatically modify source code, apply patches, restart services, or deploy fixes. Developers remain responsible for reviewing and implementing the suggested solutions.
 
 ---
-
-## 13. Future Enhancements
-
-- Support for additional log formats and monitoring platforms.
-- Integration with application monitoring and observability tools.
-- Incident trend analysis and visualization.
-- Similar-incident detection using historical records.
-- Advanced log correlation across multiple services.
-- Integration with issue-tracking platforms.
-- Context-aware diagnosis using additional application metadata.
-
----
-
-## 14. Project Objective
-
-The objective of TraceWise AI is to simplify application troubleshooting by combining structured log analysis, rule-based classification, and AI-assisted root-cause diagnosis.
-
-By converting raw application logs into structured diagnostic insights, the platform helps developers understand failures, investigate potential causes, and make more informed debugging decisions.
-
----
-
-**TraceWise AI — Turning application errors into actionable diagnostic insights.**
