@@ -40,7 +40,9 @@ The system accepts raw application logs or uploaded log files, extracts exceptio
 TraceWise AI follows a layered architecture that separates the user interface, API handling, business logic, AI integration, and data persistence.
 
 The frontend communicates with the backend through REST APIs. The backend processes incoming logs using dedicated parsing and classification services before requesting AI-assisted diagnosis. The resulting incident report is stored in PostgreSQL and returned to the frontend.
-<img width="318" height="550" alt="image" src="https://github.com/user-attachments/assets/72aac7e8-264b-461b-8011-0fe73d20b97b" />
+
+
+![TraceWise AI System Architecture](docs/mermaid_diagram.png)
 
 
 **Architecture responsibilities**
