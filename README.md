@@ -3,7 +3,9 @@
 
 TraceWise AI is a full-stack application designed to help developers investigate application failures through automated log analysis and AI-assisted root-cause diagnosis.
 
-The system accepts raw application logs or uploaded log files, extracts exception and stack-trace information, classifies incidents using a rule-based engine, and generates probable root causes and debugging recommendations using Google Gemini AI. It also provides a deterministic fallback mechanism, incident history, dashboard analytics, and benchmark evaluation.
+The system accepts raw application logs or uploaded log files, extracts exception and stack-trace information, classifies incidents using a rule-based engine, and generates probable root causes and debugging recommendations using Google Gemini AI. It also provides deterministic fallback analysis, incident history, dashboard analytics, and benchmark evaluation.
+
+---
 
 ## 1. Key Features
 
@@ -11,7 +13,7 @@ The system accepts raw application logs or uploaded log files, extracts exceptio
 - **Stack Trace Extraction:** Identifies exception types, nested causes, application classes, methods, and line numbers.
 - **Incident Classification:** Uses predefined rules to identify incident categories and severity levels.
 - **AI-Based Diagnosis:** Integrates Google Gemini to generate probable root causes, supporting evidence, recommended fixes, and prevention strategies.
-- **Fallback Analysis:** Uses a deterministic rule-based analysis service when Gemini is unavailable or an API request fails.
+- **Fallback Analysis:** Uses deterministic rule-based analysis when Gemini is unavailable or an API request fails.
 - **Incident Management:** Supports incident search, filtering, pagination, status updates, and deletion.
 - **Dashboard Analytics:** Displays incident counts, severity distribution, workflow status, and average confidence.
 - **Benchmark Evaluation:** Evaluates classification, severity prediction, root-cause keyword matching, and analysis latency using eight predefined test cases.
@@ -37,17 +39,37 @@ The system accepts raw application logs or uploaded log files, extracts exceptio
 
 ## 3. System Architecture
 
-TraceWise AI follows a layered architecture that separates the user interface, API handling, business logic, AI integration, and data persistence.
+TraceWise AI follows a layered architecture that separates the frontend, API handling, business logic, AI integration, and data persistence.
 
-The frontend communicates with the backend through REST APIs. The backend processes incoming logs using dedicated parsing and classification services before requesting AI-assisted diagnosis. The resulting incident report is stored in PostgreSQL and returned to the frontend.
+The React frontend communicates with the Spring Boot backend through REST APIs. The backend processes incoming logs using dedicated parsing and classification services before requesting AI-assisted diagnosis. The resulting incident is stored in PostgreSQL and returned to the frontend.
 
+### Architecture Diagram
 
-![TraceWise AI System Architecture](docs/mermaid_diagram.png)
+```mermaid
+flowchart TD
+    A([Developer]) --> B[React Dashboard]
+    B --> C[Axios API Client]
+    C --> D[IncidentController]
 
+    subgraph BACKEND [Spring Boot Backend]
+        D --> E[IncidentTriageService]
+        E --> F[LogParsingService]
+        F --> G[RuleClassificationService]
+        G --> H[GeminiAiService]
+        H --> I[IncidentRepository]
+    end
 
-**Architecture responsibilities**
+    H <--> J[Google Gemini API]
+    H -.-> K[FallbackRuleAnalysisService]
+    K --> I
+    I <--> L[(PostgreSQL)]
+    I --> M[IncidentResponse]
+    M --> N([Display Results])
+```
 
-| Layer | Implementation responsibility |
+### Architecture Responsibilities
+
+| Layer | Implementation Responsibility |
 |---|---|
 | Presentation | Collects logs, displays analysis results, and manages incident views. |
 | Controller | Exposes REST endpoints and handles incoming requests. |
@@ -62,61 +84,38 @@ The primary incident analysis workflow is implemented in `IncidentTriageService`
 
 Both raw-text submission and file upload eventually call this same service method. The file-upload endpoint first reads the uploaded file and converts its contents into an `AnalyzeLogRequest`.
 
-### Incident analysis sequence
+### Incident Analysis Flowchart
 
 ```mermaid
 flowchart TD
+    A([Start]) --> B{Input Type}
 
-    A(["User submits application log"])
+    B -->|Raw Log| C[analyzeRawLog]
+    B -->|File Upload| D[uploadLogFile]
 
-    A --> B{"Input method?"}
+    C --> E[IncidentTriageService]
+    D --> E
 
-    B -->|"Raw text"| C["IncidentController.analyzeRawLog()"]
-    B -->|"File upload"| D["IncidentController.uploadLogFile()"]
+    E --> F[LogParsingService]
+    F --> G[RuleClassificationService]
+    G --> H[GeminiAiService]
 
-    D --> E["Read file contents and create AnalyzeLogRequest"]
-    E --> F["IncidentTriageService.analyzeAndSaveIncident()"]
-    C --> F
+    H --> I{Gemini Analysis Available?}
 
-    F --> G{"Raw log empty?"}
+    I -->|Yes| J[AI Diagnosis]
+    I -->|No| K[FallbackRuleAnalysisService]
 
-    G -->|"Yes"| H["Throw IllegalArgumentException"]
-    G -->|"No"| I["LogParsingService.parse()"]
+    J --> L[Build Incident Entity]
+    K --> L
 
-    I --> J["ParsedLogInfo"]
-    J --> K["RuleClassificationService.classify()"]
-    K --> L["RuleClassificationResult"]
-
-    L --> M["GeminiAiService.analyze()"]
-
-    M --> N{"Gemini API key configured?"}
-
-    N -->|"No"| R["FallbackRuleAnalysisService.analyze()"]
-    N -->|"Yes"| O["callGeminiApi()"]
-
-    O --> P["buildPrompt() and send Gemini request"]
-    P --> Q["parseGeminiResponse()"]
-
-    Q --> S{"Valid analysis returned?"}
-
-    S -->|"Yes"| T["Use Gemini AiAnalysisResult"]
-    S -->|"No / API error"| U{"Fallback enabled?"}
-
-    U -->|"Yes"| R
-    U -->|"No"| V["Throw RuntimeException"]
-
-    R --> W["Deterministic AiAnalysisResult"]
-    T --> X["Construct Incident Entity"]
-    W --> X
-
-    X --> Y["IncidentRepository.save()"]
-    Y --> Z["IncidentResponse.fromEntity()"]
-    Z --> AA(["Return HTTP 201 Created"])
+    L --> M[IncidentRepository.save]
+    M --> N[IncidentResponse.fromEntity]
+    N --> O([Return API Response])
 ```
 
-### Processing sequence
+### Processing Sequence
 
-| Sequence | Class / Method | Responsibility |
+| Step | Class / Method | Responsibility |
 |---|---|---|
 | 1 | `IncidentController.analyzeRawLog()` | Accepts raw log text through a JSON request. |
 | 2 | `IncidentController.uploadLogFile()` | Reads uploaded file contents and creates an analysis request. |
@@ -137,7 +136,7 @@ This service converts unstructured application logs into structured information 
 
 The parser examines the log line by line and extracts:
 
-| Information | Pattern used |
+| Information | Pattern Used |
 |---|---|
 | Timestamp | `TIMESTAMP_PATTERN` |
 | Log level | `LOG_LEVEL_PATTERN` |
@@ -148,9 +147,9 @@ The parser examines the log line by line and extracts:
 
 **Important methods**
 
-- `parse()` — processes log lines and constructs `ParsedLogInfo`.
-- `isApplicationClass()` — filters common JVM, framework, and database-driver packages to identify application-level stack frames.
-- `extractHeuristicError()` — identifies common errors when a standard Java exception declaration is unavailable.
+- `parse()` – Processes log lines and constructs `ParsedLogInfo`.
+- `isApplicationClass()` – Filters common JVM, framework, and database-driver packages to identify application-level stack frames.
+- `extractHeuristicError()` – Identifies common errors when a standard Java exception declaration is unavailable.
 
 The parser identifies the primary exception, deepest detected nested cause, main error message, stack-trace lines, application class, method, line number, and surrounding context.
 
@@ -164,24 +163,24 @@ The classification service combines the original log with extracted exception in
 
 **Implemented incident categories**
 
-| Category | Example error patterns |
+| Category | Example Error Patterns |
 |---|---|
-| MEMORY_RESOURCE | OutOfMemoryError, heap space, Metaspace |
-| DATABASE | SQLException, PostgreSQL, HikariCP, deadlock |
-| AUTHENTICATION | JWT errors, unauthorized access, invalid credentials |
-| CONCURRENCY | ConcurrentModificationException, optimistic locking |
-| NETWORK | SocketTimeoutException, connection refused |
-| THIRD_PARTY | FeignException, upstream API failures, gateway errors |
-| APPLICATION_LOGIC | NullPointerException, IllegalArgumentException, ClassCastException |
-| UNKNOWN | No matching classification rule |
+| `MEMORY_RESOURCE` | OutOfMemoryError, heap space, Metaspace |
+| `DATABASE` | SQLException, PostgreSQL, HikariCP, deadlock |
+| `AUTHENTICATION` | JWT errors, unauthorized access, invalid credentials |
+| `CONCURRENCY` | ConcurrentModificationException, optimistic locking |
+| `NETWORK` | SocketTimeoutException, connection refused |
+| `THIRD_PARTY` | FeignException, upstream API failures, gateway errors |
+| `APPLICATION_LOGIC` | NullPointerException, IllegalArgumentException, ClassCastException |
+| `UNKNOWN` | No matching classification rule |
 
 **Important methods**
 
-- `determineCategory()` — checks predefined error patterns and identifies the incident category.
-- `determineSeverity()` — assigns severity based on category and error indicators.
-- `calculateConfidence()` — calculates rule confidence based on the number of matched rules.
+- `determineCategory()` – Checks predefined error patterns and identifies the incident category.
+- `determineSeverity()` – Assigns severity based on category and error indicators.
+- `calculateConfidence()` – Calculates rule confidence based on the number of matched rules.
 
-**Severity levels:** CRITICAL, HIGH, MEDIUM, LOW.
+**Severity levels:** `CRITICAL`, `HIGH`, `MEDIUM`, `LOW`.
 
 The service returns a `RuleClassificationResult` containing the category, severity, matched rules, confidence, and classification rationale.
 
@@ -191,7 +190,7 @@ The service returns a `RuleClassificationResult` containing the category, severi
 
 This service integrates Google Gemini into the incident diagnosis process using Spring's `RestTemplate`.
 
-The implementation:
+**Implementation**
 
 1. Checks API-key availability using `GeminiConfig.hasApiKey()`.
 2. Creates a diagnostic prompt using the raw log, parsed exception details, and classification result.
@@ -210,14 +209,14 @@ The implementation:
 | `buildPrompt()` | Constructs the incident diagnosis prompt. |
 | `parseGeminiResponse()` | Extracts and maps the generated JSON response. |
 
-The generated analysis contains:
+**Generated analysis contains**
 
-- Probable root cause.
-- Supporting evidence.
-- Recommended fixes.
-- Prevention strategies.
-- Confidence score.
-- Analysis provider.
+- Probable root cause
+- Supporting evidence
+- Recommended fixes
+- Prevention strategies
+- Confidence score
+- Analysis provider
 
 ### 5.4 Deterministic Fallback — `FallbackRuleAnalysisService`
 
@@ -284,7 +283,7 @@ The entity also uses lifecycle callbacks to maintain creation and update timesta
 
 The frontend is developed using React and communicates with the backend through Axios.
 
-### Main React components
+### Main React Components
 
 | Component | Implementation |
 |---|---|
@@ -297,7 +296,7 @@ The frontend is developed using React and communicates with the backend through 
 | `SystemHealthModal.jsx` | Displays backend, database, AI configuration, and JVM health. |
 | `Navbar.jsx` | Navigation and service status indicators. |
 
-### Frontend-to-backend communication
+### Frontend-to-Backend Communication
 
 The API client is implemented in `frontend/src/api/client.js`.
 
@@ -349,12 +348,12 @@ The `runEvaluationSuite()` method processes each sample through the log parser, 
 
 **Evaluation metrics**
 
-- Category classification accuracy.
-- Severity prediction accuracy.
-- Root-cause keyword matching.
-- Average analysis latency.
-- Average confidence score.
-- Individual sample results and analysis provider.
+- Category classification accuracy
+- Severity prediction accuracy
+- Root-cause keyword matching
+- Average analysis latency
+- Average confidence score
+- Individual sample results and analysis provider
 
 Root-cause alignment is evaluated using predefined keyword matching rather than semantic similarity. The results represent performance on the included benchmark samples, not independently validated production accuracy.
 
@@ -396,7 +395,7 @@ incident-triage-assistant/
 
 The backend includes JUnit-based unit tests and Spring Boot integration tests.
 
-The test coverage includes:
+**Test coverage includes:**
 
 - Log parsing and nested exception extraction.
 - Timestamp, log-level, thread, and stack-frame extraction.
@@ -411,7 +410,7 @@ The project uses Maven for backend testing and builds, and npm/Vite for frontend
 
 ---
 
-### Project Summary
+## Project Summary
 
 TraceWise AI demonstrates the integration of Java-based backend development, REST API design, structured log processing, rule-based classification, external AI integration, database persistence, and React-based frontend development.
 
